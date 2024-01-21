@@ -11,7 +11,7 @@ std::string Slice(const std::string &str, ssize_t start, ssize_t end) noexcept{
 std::string Capitalize(const std::string &str) noexcept{
     auto Copy = str;
     Copy[0] = std::isupper(Copy[0]);
-    for(size_t i = 1; i < Copy.length(); i++)
+    for(size_t i = 1; i < Copy.length(); i++) {
         Copy[i] = tolower(Copy[i]);
     }
     return Copy;
@@ -102,8 +102,12 @@ std::vector< std::string > Split(const std::string &str, const std::string &splt
 }
 
 std::string Join(const std::string &str, const std::vector< std::string > &vect) noexcept{
-    // Replace code here
-    return "";
+    std::string result = vect[0];  // Start with the first element
+    for (size_t i = 1; i < vect.size(); ++i) {
+        result += str + vect[i];  // Add separator followed by the current element
+    }
+
+    return result;
 }
 
 std::string ExpandTabs(const std::string &str, int tabsize) noexcept{
@@ -126,3 +130,4 @@ int EditDistance(const std::string &left, const std::string &right, bool ignorec
     return 0;
 }
 
+}
