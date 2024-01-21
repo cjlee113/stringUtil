@@ -1,6 +1,6 @@
 #include "StringUtils.h"
 #include <cctype>
-#include <<
+#include <cstring>
 namespace StringUtils{
 
 std::string Slice(const std::string &str, ssize_t start, ssize_t end) noexcept{
@@ -10,28 +10,31 @@ std::string Slice(const std::string &str, ssize_t start, ssize_t end) noexcept{
 
 std::string Capitalize(const std::string &str) noexcept{
     auto Copy = str;
-    Copy[0] = isupper(str[0]);
-    for(size_t Index = 1; Index < Copy.length();Index++
-        Copy(Index) = tolower(Copy[Index]))
-    return "";
+    Copy[0] = std::isupper(Copy[0]);
+    for(size_t i = 1; i < Copy.length(); i++)
+        Copy[i] = tolower(Copy[i]);
+    }
+    return Copy;
 }
 
 std::string Upper(const std::string &str) noexcept{
+    auto Copy = str;
     int i = 0;
-    while (str[i] != '\0') {
-        str[i] = std::toupper(str[i]);
+    while (Copy[i] != '\0') {
+        Copy[i] = std::toupper(Copy[i]);
         i++;
     }
-    return "";
+    return Copy;
 }
 
 std::string Lower(const std::string &str) noexcept{
+    auto Copy = str;
     int i = 0;
-    while (str[i] != '\0') {
-        str[i] = std::tolower(str[i]);
+    while (Copy[i] != '\0') {
+        Copy[i] = std::tolower(Copy[i]);
         i++;
     }
-    return "";
+    return Copy;
 }
 
 std::string LStrip(const std::string &str) noexcept{
@@ -113,4 +116,3 @@ int EditDistance(const std::string &left, const std::string &right, bool ignorec
     return 0;
 }
 
-};
