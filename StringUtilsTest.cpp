@@ -109,5 +109,7 @@ TEST(StringUtilsTest, ExpandTabs){
 }
 
 TEST(StringUtilsTest, EditDistance){
-    
+    EXPECT_EQ(StringUtils::EditDistance("kitten", "kitten"), 0);
+    EXPECT_EQ(StringUtils::EditDistance("kitten", "mitten"), 1);
+    EXPECT_EQ(StringUtils::EditDistance("kitten", "sitting"), 3);
 }
