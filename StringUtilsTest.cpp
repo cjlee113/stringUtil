@@ -102,7 +102,10 @@ TEST(StringUtilsTest, Join){
 }
 
 TEST(StringUtilsTest, ExpandTabs){
-    
+    EXPECT_EQ(StringUtils::ExpandTabs("\tHello\tWorld"), "    Hello    World");
+    EXPECT_EQ(StringUtils::ExpandTabs("\t\t\t", 4), "            ");
+    EXPECT_EQ(StringUtils::ExpandTabs("\tA\t\tB\t\t\tC", 2), "  A   B     C");
+    EXPECT_EQ(StringUtils::ExpandTabs("\tOne\tTwo\tThree\t"), "    One    Two   Three    ");
 }
 
 TEST(StringUtilsTest, EditDistance){
