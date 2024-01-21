@@ -58,15 +58,24 @@ TEST(StringUtilsTest, Strip){
 }
 
 TEST(StringUtilsTest, Center){
-    
+    EXPECT_EQ(StringUtils::Center("Hello", 9), "  Hello  ");
+    EXPECT_EQ(StringUtils::Center("Hello", 10), "  Hello   ");
+    EXPECT_EQ(StringUtils::Center("A", 5), "  A  ");
+    EXPECT_EQ(StringUtils::Center("", 7), "       ");
 }
 
 TEST(StringUtilsTest, LJust){
-    
+    EXPECT_EQ(StringUtils::LJust("Hello", 9), "Hello    ");
+    EXPECT_EQ(StringUtils::LJust("Hello", 10), "Hello     ");
+    EXPECT_EQ(StringUtils::LJust("A", 5), "A    ");
+    EXPECT_EQ(StringUtils::LJust("", 7), "       ");
 }
 
 TEST(StringUtilsTest, RJust){
-    
+    EXPECT_EQ(StringUtils::LJust("Hello", 9), "    Hello");
+    EXPECT_EQ(StringUtils::LJust("Hello", 10), "     Hello");
+    EXPECT_EQ(StringUtils::LJust("A", 5), "    A");
+    EXPECT_EQ(StringUtils::LJust("", 7), "       ");
 }
 
 TEST(StringUtilsTest, Replace){
