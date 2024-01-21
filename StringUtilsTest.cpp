@@ -88,11 +88,17 @@ TEST(StringUtilsTest, Replace){
 }
 
 TEST(StringUtilsTest, Split){
-    
+    EXPECT_EQ(StringUtils::Split(" A B C "), std::vector<std::string>("A", "B", "C"));
+    EXPECT_EQ(StringUtils::Split(" I am friendly "), std::vector<std::string>("I", "am", "friendly"));
+    EXPECT_EQ(StringUtils::Split(" One, Two, Three ", ","), std::vector<std::string>("One", "Two", "Three"));
+    EXPECT_EQ(StringUtils::Split("", ""), std::vector<std::string>{});
 }
 
 TEST(StringUtilsTest, Join){
-    
+    EXPECT_EQ(StringUtils::Join(" ", (" A B C ")), "A B C");
+    EXPECT_EQ(StringUtils::Join(" ", ("I", "am", "friendly")), "I am friendly");
+    EXPECT_EQ(StringUtils::Join(", ", ("One", "Two", "Three")), "One, Two, Three");
+    EXPECT_EQ(StringUtils::Join("", ()), "");
 }
 
 TEST(StringUtilsTest, ExpandTabs){
