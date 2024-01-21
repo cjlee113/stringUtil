@@ -79,7 +79,12 @@ TEST(StringUtilsTest, RJust){
 }
 
 TEST(StringUtilsTest, Replace){
-    
+    EXPECT_EQ(StringUtils::Replace("Hello World", "World", "Friends"), "Hello Friends");
+    EXPECT_EQ(StringUtils::Replace("Hi Friends", "World", "Everyone"), "Hi Everyone");
+    EXPECT_EQ(StringUtils::Replace("Hi Hi Hi", "Hi", "Bye"), "Bye Bye Bye");
+    EXPECT_EQ(StringUtils::Replace("Hello World", "World", ""), "Hello ");
+    EXPECT_EQ(StringUtils::Replace("Hello World", "Hello", ""), " Universe");
+    EXPECT_EQ(StringUtils::Replace("", "Hello", "Hi"), "");
 }
 
 TEST(StringUtilsTest, Split){
