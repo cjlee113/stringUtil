@@ -25,21 +25,36 @@ TEST(StringUtilsTest, Upper){
 }
 
 TEST(StringUtilsTest, Lower){
-     std::string Base = "hello";
+     std::string Base = "HELLO";
 
-    EXPECT_EQ(StringUtils::Lower(Base),"HELLO");
+    EXPECT_EQ(StringUtils::Lower(Base),"hello");
 }
 
 TEST(StringUtilsTest, LStrip){
-    
+    std::string Base = "hello";
+
+    EXPECT_EQ(StringUtils::LStrip(Base), Base)
+    EXPECT_EQ(StringUtils::LStrip("    Hello"), "Hello");
+    EXPECT_EQ(StringUtils::LStrip("          "), "");
+    EXPECT_EQ(StringUtils::LStrip(" \t  Hello World"), "Hello World");
 }
 
 TEST(StringUtilsTest, RStrip){
+    std::string Base = "hello";
     
+    EXPECT_EQ(StringUtils::LStrip(Base), Base)
+    EXPECT_EQ(StringUtils::LStrip("Hello    "), "Hello");
+    EXPECT_EQ(StringUtils::LStrip("          "), "");
+    EXPECT_EQ(StringUtils::LStrip("Hello World \t  "), "Hello World");
 }
 
 TEST(StringUtilsTest, Strip){
+    std::string Base = "hello";
     
+    EXPECT_EQ(StringUtils::LStrip(Base), Base)
+    EXPECT_EQ(StringUtils::LStrip("    Hello    "), "Hello");
+    EXPECT_EQ(StringUtils::LStrip("          "), "");
+    EXPECT_EQ(StringUtils::LStrip(" \t  Hello World \t  "), "Hello World");
 }
 
 TEST(StringUtilsTest, Center){
