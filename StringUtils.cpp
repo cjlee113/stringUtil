@@ -1,6 +1,10 @@
 #include "StringUtils.h"
 #include <cctype>
 #include <cstring>
+#include <iostream>
+#include <cstddef>
+#include <cmath>
+
 namespace StringUtils{
 
 std::string Slice(const std::string &str, ssize_t start, ssize_t end) noexcept{
@@ -16,9 +20,9 @@ std::string Slice(const std::string &str, ssize_t start, ssize_t end) noexcept{
     return str.substr(start, end - start);
 }
 
-std::string Capitalize(const std::string &str) noexcept{
+std::string Capitalize(const std::string &str) noexcept{ //???
     auto copy = str;
-    copy[0] = toupper(copy[0]);
+    copy[0] = toupper(str[0]);
     for (size_t Index = 1; Index < copy.length(); Index++) {
         copy[Index] = tolower(copy[Index]);
     }
@@ -53,26 +57,30 @@ std::string LStrip(const std::string &str) noexcept {
     return str.substr(i);
 }
 
-std::string RStrip(const std::string &str) noexcept {
-    int i = str.length() - 1; // the end of string
-    while (i >= 0 && std::isspace(str[i])) {
-        i--;
+std::string RStrip(const std::string &str) noexcept { //???
+    /*
+    auto copy = str;
+    for (size_t i = copy.length(); i > 0; i--){
+        if (copy[i - 1] != ' ') {
+            copy.erase(i, std::string::npos);
+            break;
+        }
     }
-    return str.substr(0, i + 1);
+    return copy;
+*/
+    for (int j = str.length(); j > 0; j--){
+        if (str[j - 1] != ' ') {
+            return str.substr(0,j - 1);
+            break;
+        }
+    }
 }
 
 std::string Strip(const std::string &str) noexcept {
-    int i = 0;           // the start of string
-    int j = str.length(); // the end of string
-    while (i < j && std::isspace(str[i])) {
-        i++;
-    }
-    while (j > i && std::isspace(str[j - 1])) {
-        j--;
-    }
-    return str.substr(i, j - i);
+    auto copy = RStrip(str);
+    auto strip_string = LStrip(copy);
+    return strip_string;
 }
-
 
 std::string Center(const std::string &str, int width, char fill) noexcept{
     int i = width - str.length(); //width subtracted by string length 
@@ -92,28 +100,61 @@ std::string RJust(const std::string &str, int width, char fill) noexcept{
 }
 
 std::string Replace(const std::string &str, const std::string &old, const std::string &rep) noexcept {
-    std::string finalString; // create a final variable
-    for (size_t i = 0; i < str.length(); ) { // setup loop to search through 'str'
-        if (str.compare(i, old.length(), old) == 0) { // use compare to look through string for the old substring
-            finalString += rep; // if the old substring is found, add the replacement substring to final variable
-            i += old.length(); // iterate the length of old substring to 'i' to skip the old substring
-        } else {
-            finalString += str[i]; // if no old substring is found, add the current letter to the final variable
-            i++;
+    auto copy = str;
+    int found = copy.find(old);
+    while (found != std::string::npos){
+        copy.erase(found, old.length());
+        copy.insert(found, rep);
+        found = copy.find(old);
+    }
+    return copy;
+}
+
+std::vector<std::string> Split(const std::string &str, const std::string &splt = "") { //???
+    std::vector<std::string> result;
+
+    if (str.empty()) {
+        return result; // Return an empty vector for an empty input string
+    }
+
+    std::string token;
+
+    if (splt.empty()) {
+        // If splt is empty, split on white space
+        size_t start = 0;
+        size_t length = str.length();
+
+        for (size_t i = 0; i <= length; ++i) {
+            if (i == length || std::isspace(str[i])) {
+                result.push_back(str.substr(start, i - start));
+                start = i + 1;
+            }
+        }
+    } else {
+        size_t start = 0;
+        size_t length = str.length();
+
+        for (size_t i = 0; i <= length; ++i) {
+            if (i == length || str[i] == splt[0]) {
+                if (str.substr(i, splt.length()) == splt) {
+                    result.push_back(str.substr(start, i - start));
+                    start = i + splt.length();
+                }
+            }
         }
     }
-    return finalString;
+
+    return result;
 }
 
-std::vector< std::string > Split(const std::string &str, const std::string &splt) noexcept{
-    // Replace code here
-    return {};
-}
 
-std::string Join(const std::string &str, const std::vector< std::string > &vect) noexcept{
-    std::string result = vect[0];  // Start with the first element
-    for (size_t i = 1; i < vect.size(); ++i) {
-        result += str + vect[i];  // Add separator followed by the current element
+std::string Join(const std::string &str, const std::vector< std::string > &vect) noexcept{ //???
+    std::string result;  // Start with the first element
+    for (size_t i = 0; i < vect.size(); i++) {
+        result.append(vect[i]);
+        if (i != vect.size() - 1){
+            result.append(str);
+        }
     }
     return result;
 }
@@ -133,9 +174,25 @@ std::string ExpandTabs(const std::string &str, int tabsize) noexcept{
         return result;
 }
 
-int EditDistance(const std::string &left, const std::string &right, bool ignorecase) noexcept{
-    // Replace code here
-    return 0;
-}
+int EditDistance(const std::string &left, const std::string &right, bool ignorecase = false) {
+    const int size1 = left.size();
+    const int size2 = right.size();
 
+    if (size1 == 0) return size2;
+    if (size2 == 0) return size1;
+
+    std::string word1 = (ignorecase) ? StringUtils::Lower(left) : left;
+    std::string word2 = (ignorecase) ? StringUtils::Lower(right) : right;
+
+    int verif[size1 + 1][size2 + 1] = {};
+
+    for (int i = 0; i <= size1; ++i) verif[i][0] = i;
+    for (int j = 0; j <= size2; ++j) verif[0][j] = j;
+
+    for (int i = 1; i <= size1; ++i)
+        for (int j = 1; j <= size2; ++j)
+            verif[i][j] = std::min({verif[i - 1][j] + 1, verif[i][j - 1] + 1, verif[i - 1][j - 1] + (word1[i - 1] != word2[j - 1])});
+
+    return verif[size1][size2];
+}
 }
