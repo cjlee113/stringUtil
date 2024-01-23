@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "StringUtils.h"
-/*
+
 TEST(StringUtilsTest, SliceTest){
     std::string Base = "Hello";
 
@@ -106,7 +106,7 @@ TEST(StringUtilsTest, ExpandTabs){
     EXPECT_EQ(StringUtils::ExpandTabs("\tA\t\tB\t\t\tC", 2), "  A   B     C");
     EXPECT_EQ(StringUtils::ExpandTabs("\tOne\tTwo\tThree\t"), "    One    Two    Three    ");
 }
-*/
+
 TEST(StringUtilsTest, EditDistance){
     EXPECT_EQ(StringUtils::EditDistance("kitten", "kitten"), 0);
     EXPECT_EQ(StringUtils::EditDistance("kitten", "mitten"), 1);

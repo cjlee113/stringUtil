@@ -4,13 +4,15 @@ Student 1: Christopher Lee (920724149)
 
 
 ## Project Status
-Few functions needed to be finished. Some of the functions should work but don't maybe due to segmentation fault.
+* Few functions needed to be finished. Some of the functions should work but don't maybe due to segmentation fault.
+* Had an extra StringUtils.cpp that I was editing instead of the main one, copying code from second one to main one
 
 ## Known Issues
 Capitalize function, RStrip function, Strip function, Replace function, Split function, Join function (segmentation fault)
-* Had two StringUtils.cpp so I got rid of one and Capitalize, RStrip, and Strip function worked. May have messed up commits since I was     commiting to another StringUtils.cpp instead of the mainone
+* Had two StringUtils.cpp so I got rid of one and Capitalize, RStrip, and Strip function worked. May have messed up commits since I was     commiting to another StringUtils.cpp instead of the main one
 
 Join, Expandtabs, and Editdistance function have error that won't allow them to run tests
+* Fixed error, was an extra { in front of Join function that cut it off from top stuff
 
 ## Code References
 * [Find command](https://www.geeksforgeeks.org/std-find-in-cpp/)
